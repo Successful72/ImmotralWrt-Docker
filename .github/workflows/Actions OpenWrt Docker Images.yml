@@ -30,23 +30,32 @@ jobs:
         env:
           INPUT_TARGET: ${{ github.event.inputs.INPUT_TARGET }}
         run: |
-          if [ "$INPUT_TARGET" = "all" ] || [ "$INPUT_TARGET" = "" ]; then
+          if [ "$INPUT_TARGET" = "all" ] || [ -z "$INPUT_TARGET" ]; then
             export TARGETS="$(cat config/platform.config)"
           else
             export TARGETS="$INPUT_TARGET"
           fi
+          
+          # 初始化JSON结构
           JSON='{"config": ["default"], "targets":['
+          
           FIRST=1
           for TARGET in $TARGETS; do
             if [ $FIRST -ne 1 ]; then
               JSON="$JSON,"
             fi
+            # 简化拼接方式
             JSON="$JSON\"$TARGET\""
             FIRST=0
           done
+          
+          # 结束JSON结构
           JSON="$JSON"]}"
-          echo "Generated JSON: $JSON"  # 调试输出
-          echo $JSON
+          
+          # 调试输出，确保JSON格式正确
+          echo "Generated JSON: $JSON"
+          
+          # 输出到GITHUB_OUTPUT
           echo "TARGETS=$JSON" >> $GITHUB_OUTPUT
 
   Docker-Images:
