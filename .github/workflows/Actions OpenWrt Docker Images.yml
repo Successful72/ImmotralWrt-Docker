@@ -112,11 +112,15 @@ jobs:
           cd $GITHUB_WORKSPACE
           rm -rf openwrt-imagebuilder*
 
+      - name: Build Docker Image
+        if: env.DOCKER_EXTERA_TAG == 'amd64'
+        run: |
+          docker build -t openwrt:${{ matrix.TARGETS }} .
+        
       - name: Save Docker Image
         if: env.DOCKER_EXTERA_TAG == 'amd64'
         run: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/openwrt:latest
-          docker save -o openwrt.tar ${{ secrets.DOCKERHUB_USERNAME }}/openwrt:latest
+          docker save -o openwrt-${{ matrix.TARGETS }}.tar openwrt:${{ matrix.TARGETS }}
 
       - name: Create GitHub Release
         id: create_release
@@ -133,5 +137,5 @@ jobs:
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/octet-stream" \
-            --data-binary @openwrt.tar \
-            https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=openwrt.tar
+            --data-binary @openwrt-${{ matrix.TARGETS }}.tar \
+            https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=openwrt-${{ matrix.TARGETS }}.tar
