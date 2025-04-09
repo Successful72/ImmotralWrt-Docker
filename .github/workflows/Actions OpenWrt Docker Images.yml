@@ -115,21 +115,21 @@ jobs:
       - name: Build Docker Image
         if: env.DOCKER_EXTERA_TAG == 'amd64'
         run: |
-          docker build -t openwrt:${{ matrix.TARGETS }} .
+          docker build -t openwrt:${{ matrix.DEVICE_PLATFORM }} .
         
       - name: Save Docker Image
         if: env.DOCKER_EXTERA_TAG == 'amd64'
         run: |
-          docker save -o openwrt-${{ matrix.TARGETS }}.tar openwrt:${{ matrix.TARGETS }}
+          docker save -o openwrt-${{ matrix.DEVICE_PLATFORM }}.tar openwrt:${{ matrix.DEVICE_PLATFORM }}
 
       - name: Create GitHub Release
         id: create_release
         run: |
-          RELEASE_TAG="v1.0-${{ matrix.TARGETS }}"
+          RELEASE_TAG="v1.0-${{ matrix.DEVICE_PLATFORM }}"
           GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} # Make sure to set this secret in your repository settings
           RESPONSE=$(curl -s -X POST \
             -H "Authorization: token $GITHUB_TOKEN" \
-            -d '{"tag_name": "'$RELEASE_TAG'", "name": "'$RELEASE_TAG'", "body": "Docker image for ${{ matrix.TARGETS }}"}' \
+            -d '{"tag_name": "'$RELEASE_TAG'", "name": "'$RELEASE_TAG'", "body": "Docker image for ${{ matrix.DEVICE_PLATFORM }}"}' \
             https://api.github.com/repos/${{ github.repository }}/releases)
           echo "RELEASE_ID=$(echo $RESPONSE | jq -r .id)" >> $GITHUB_ENV
 
@@ -137,5 +137,5 @@ jobs:
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/octet-stream" \
-            --data-binary @openwrt-${{ matrix.TARGETS }}.tar \
-            https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=openwrt-${{ matrix.TARGETS }}.tar
+            --data-binary @openwrt-${{ matrix.DEVICE_PLATFORM }}.tar \
+            https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=openwrt-${{ matrix.DEVICE_PLATFORM }}.tar
