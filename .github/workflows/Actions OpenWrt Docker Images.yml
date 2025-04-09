@@ -38,7 +38,7 @@ jobs:
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
-          [[ $FIRST -ne 1 ]] && JSON="$JSON"','
+          [[ $FIRST -ne 1 ]] && JSON="$JSON",' 
           JSON="$JSON"'"'"${TARGET}"'"'
           FIRST=0
           done
@@ -115,11 +115,15 @@ jobs:
       - name: Build Docker Image
         if: env.DOCKER_EXTERA_TAG == 'amd64'
         run: |
+          # Ensure that DEVICE_PLATFORM is populated correctly
+          echo "DEVICE_PLATFORM: ${{ matrix.DEVICE_PLATFORM }}"
           docker build -t openwrt:${{ matrix.DEVICE_PLATFORM }} .
         
       - name: Save Docker Image
         if: env.DOCKER_EXTERA_TAG == 'amd64'
         run: |
+          # Check DEVICE_PLATFORM variable here as well
+          echo "DEVICE_PLATFORM: ${{ matrix.DEVICE_PLATFORM }}"
           docker save -o openwrt-${{ matrix.DEVICE_PLATFORM }}.tar openwrt:${{ matrix.DEVICE_PLATFORM }}
 
       - name: Create GitHub Release
