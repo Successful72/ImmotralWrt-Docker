@@ -38,11 +38,13 @@ jobs:
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
-          [[ $FIRST -ne 1 ]] && JSON="$JSON",' 
-          JSON="$JSON"'"'"${TARGET}"'"'
-          FIRST=0
+            if [ $FIRST -ne 1 ]; then
+              JSON="$JSON,"
+            fi
+            JSON="$JSON\"${TARGET}\""
+            FIRST=0
           done
-          JSON="$JSON"']}'
+          JSON="$JSON"]}"
           echo $JSON
           echo "TARGETS=$JSON" >> $GITHUB_OUTPUT
 
