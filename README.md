@@ -2,7 +2,7 @@
 
 Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
----
+<br>
 
 ## 支持设备及工作原理
 
@@ -10,7 +10,8 @@ Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
 本项目基于[ImmortalWrt OpenWrt-24.10](https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10)构建，Docker镜像构建完毕后，会自动推送到Releases，供本地使用。
 
----
+<br>
+
 ## 镜像使用方法
 
 1. 将编译好的镜像通过SFTP传入服务器，然后执行以下命令将镜像导入本地镜像仓库
@@ -100,8 +101,9 @@ docker load -i <镜像绝对路径>
       CPU_RESERVATION=2
 
       ```
-3. 部署即可。
+3. 部署Docker Compose即可。
 
+<br>
 
 ## 鸣谢
 
