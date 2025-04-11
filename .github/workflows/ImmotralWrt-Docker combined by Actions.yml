@@ -6,6 +6,19 @@ env:
 
 on:
   workflow_dispatch:
+    inputs:
+      IP_ADDRESS:
+        description: '请指定OpenWrt的IPv4地址(默认:192.168.1.1)'
+        required: true
+        default: '192.168.1.1'
+      GATEWAY:
+        description: '请指定OpenWrt的网关(例:192.168.1.254)'
+        required: true
+        default: '192.168.1.254'
+      DNS_SERVER:
+        description: '请指定OpenWrt的DNS服务器(例:8.8.8.8)'
+        required: true
+        default: '8.8.8.8'
 
 jobs:
   Build:
@@ -47,6 +60,29 @@ jobs:
           cp -rf $GITHUB_WORKSPACE/files .
           chmod +x files/etc/rc.local
 
+      - name: Generate Network Config
+        run: |
+          mkdir -p files/etc/config
+          cat > files/etc/config/network <<EOF
+          config interface 'loopback'
+            option ifname 'lo'
+            option proto 'static'
+            option ipaddr '127.0.0.1'
+            option netmask '255.0.0.0'
+
+          config interface 'lan'
+            option type 'bridge'
+            option ifname 'eth0'
+            option proto 'static'
+            option ipaddr '${{ github.event.inputs.IP_ADDRESS }}'
+            option netmask '255.255.255.0'
+            option gateway '${{ github.event.inputs.GATEWAY }}'
+            option dns '${{ github.event.inputs.DNS_SERVER }}'
+          EOF
+    
+          echo "已生成网络配置:"
+          cat files/etc/config/network
+  
       - name: Build RootFS
         run: |
           cd immortalwrt-imagebuilder-$DEVICE_VERSION-$DEVICE_TARGET-$DEVICE_SUBTARGET.Linux-x86_64
