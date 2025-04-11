@@ -59,9 +59,16 @@ jobs:
           cd immortalwrt-imagebuilder-$DEVICE_VERSION-$DEVICE_TARGET-$DEVICE_SUBTARGET.Linux-x86_64
           cp -rf $GITHUB_WORKSPACE/files .
 
-          sed -i "s/\${{ github.event.inputs.IP_ADDRESS }}/${{ github.event.inputs.IP_ADDRESS }}/g" files/etc/config/network
-          sed -i "s/\${{ github.event.inputs.GATEWAY }}/${{ github.event.inputs.GATEWAY }}/g" files/etc/config/network
-          sed -i "s/\${{ github.event.inputs.DNS_SERVER }}/${{ github.event.inputs.DNS_SERVER }}/g" files/etc/config/network
+          # 使用 printf 安全地传递变量
+          IP_ADDRESS="${{ github.event.inputs.IP_ADDRESS }}"
+          GATEWAY="${{ github.event.inputs.GATEWAY }}"
+          DNS_SERVER="${{ github.event.inputs.DNS_SERVER }}"
+
+          # 替换模板文件中的占位符
+          printf "%s\n" "$IP_ADDRESS" | sed 's/[^a-zA-Z0-9._-]/\\&/g' > files/etc/config/network
+          sed -i "s/{{IP_ADDRESS}}/${IP_ADDRESS}/g" files/etc/config/network
+          sed -i "s/{{GATEWAY}}/${GATEWAY}/g" files/etc/config/network
+          sed -i "s/{{DNS_SERVER}}/${DNS_SERVER}/g" files/etc/config/network
           
           chmod +x files/etc/rc.local
 
