@@ -90,6 +90,9 @@ jobs:
         id: datetime
         run: echo "DATE_TIME=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
 
+      - name: Debug Date and Time
+        run: echo "DATE_TIME is $DATE_TIME"
+      
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
