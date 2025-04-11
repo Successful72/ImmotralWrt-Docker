@@ -12,11 +12,11 @@ on:
         required: true
         default: '192.168.1.1'
       GATEWAY:
-        description: '请指定OpenWrt的网关(例:192.168.1.254)'
+        description: '请指定OpenWrt的网关(默认:192.168.1.254)'
         required: true
         default: '192.168.1.254'
       DNS_SERVER:
-        description: '请指定OpenWrt的DNS服务器(例:8.8.8.8)'
+        description: '请指定OpenWrt的DNS服务器(默认:8.8.8.8)'
         required: true
         default: '8.8.8.8'
 
