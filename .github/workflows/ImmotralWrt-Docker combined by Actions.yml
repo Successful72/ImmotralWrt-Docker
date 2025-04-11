@@ -58,6 +58,11 @@ jobs:
           tar -I zstd -xvf *.tar.zst
           cd immortalwrt-imagebuilder-$DEVICE_VERSION-$DEVICE_TARGET-$DEVICE_SUBTARGET.Linux-x86_64
           cp -rf $GITHUB_WORKSPACE/files .
+
+          sed -i "s/\${{ github.event.inputs.IP_ADDRESS }}/${{ github.event.inputs.IP_ADDRESS }}/g" files/etc/config/network
+          sed -i "s/\${{ github.event.inputs.GATEWAY }}/${{ github.event.inputs.GATEWAY }}/g" files/etc/config/network
+          sed -i "s/\${{ github.event.inputs.DNS_SERVER }}/${{ github.event.inputs.DNS_SERVER }}/g" files/etc/config/network
+          
           chmod +x files/etc/rc.local
 
       - name: Build RootFS
