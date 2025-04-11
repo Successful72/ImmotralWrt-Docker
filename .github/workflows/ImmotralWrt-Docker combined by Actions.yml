@@ -82,13 +82,13 @@ jobs:
           
       - name: Build Docker Image
         run: |
-          docker build -t immortalwrt:latest -f Dockerfile .
-          docker save -o immortalwrt-docker-image.tar immortalwrt:latest
-          gzip immortalwrt-docker-image.tar
+          docker build -t immortalwrt:${{ steps.datetime.outputs.DATE_TIME }} -f Dockerfile .
+          docker save -o immortalwrt-docker-image-${{ steps.datetime.outputs.DATE_TIME }}.tar immortalwrt:${{ steps.datetime.outputs.DATE_TIME }}
+          gzip immortalwrt-docker-image-${{ steps.datetime.outputs.DATE_TIME }}.tar
 
       - name: Get Date
-        id: date
-        run: echo "DATE=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+        id: datetime
+        run: echo "DATE_TIME=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
@@ -96,10 +96,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: immortalwrt-${{ steps.date.outputs.DATE }}
-          name: ImmortalWrt Docker Image ${{ steps.date.outputs.DATE }}
+          tag_name: immortalwrt-${{ steps.datetime.outputs.DATE_TIME }}
+          name: ImmortalWrt Docker Image ${{ steps.datetime.outputs.DATE_TIME }}
           draft: false
           prerelease: false
           files: |
-            immortalwrt-docker-image.tar.gz
+            immortalwrt-docker-image-${{ steps.datetime.outputs.DATE_TIME }}.tar.gz
             immortalwrt-rootfs.tar.gz
