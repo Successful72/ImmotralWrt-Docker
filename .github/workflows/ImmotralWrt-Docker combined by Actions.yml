@@ -101,10 +101,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: immortalwrt-${{ steps.datetime.outputs.DATE_TIME }}
-          name: ImmortalWrt Docker Image ${{ steps.datetime.outputs.DATE_TIME }}
+          tag_name: immortalwrt-${{ env.DATE_TIME }}  # 使用环境变量来设置tag_name
+          name: ImmortalWrt Docker Image ${{ env.DATE_TIME }}
           draft: false
           prerelease: false
           files: |
-            immortalwrt-docker-image-${{ steps.datetime.outputs.DATE_TIME }}.tar.gz
+            immortalwrt-docker-image-${{ env.DATE_TIME }}.tar.gz
             immortalwrt-rootfs.tar.gz
