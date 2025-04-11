@@ -1,8 +1,8 @@
 # [immotralwrt-Docker](https://github.com/zzsrv/OpenWrt-Docker)
 
-Openwrt的自编译Docker镜像，基于ImmortalWrt OpenWrt-24.10构建。
+Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
-## 支持设备
+## 支持设备及工作原理
 
 编译的Docker镜像仅支持x86设备。
 
