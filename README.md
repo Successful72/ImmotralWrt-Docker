@@ -1,4 +1,4 @@
-# [immotralwrt-Docker](https://github.com/Successful72/OpenWrt-Docker))
+# [immotralwrt-Docker](https://github.com/Successful72/OpenWrt-Docker)
 
 Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
