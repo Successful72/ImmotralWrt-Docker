@@ -1,4 +1,4 @@
-name: Build OpenWrt Docker Image
+name: Build ImmotralWrtWrt Docker Image
 
 env:
   PREFIX_URL: https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/targets/
