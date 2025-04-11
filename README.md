@@ -15,7 +15,9 @@ Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
 将编译好的镜像通过SFTP传入服务器，然后执行以下命令将镜像导入本地镜像仓库
 
-``docker load -i <镜像绝对路径>``
+```
+docker load -i <镜像绝对路径>
+```
 
 ## 鸣谢
 
