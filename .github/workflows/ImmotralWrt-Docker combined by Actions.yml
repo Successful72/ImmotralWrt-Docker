@@ -1,8 +1,8 @@
 name: Build ImmotralWrtWrt Docker Image
 
 env:
-  PREFIX_URL: https://downloads.immortalwrt.org/releases/24.10-SNAPSHOT/targets/
-  DEVICE_VERSION: 24.10-SNAPSHOT
+  PREFIX_URL: https://downloads.immortalwrt.org/releases/24.10.0/targets/
+  DEVICE_VERSION: 24.10.0
 
 on:
   workflow_dispatch:
