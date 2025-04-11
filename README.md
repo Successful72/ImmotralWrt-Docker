@@ -2,12 +2,15 @@
 
 Openwrt的自编译Docker镜像，使用GitHub Actions构建。
 
+---
+
 ## 支持设备及工作原理
 
 编译的Docker镜像仅支持x86设备。
 
 本项目基于[ImmortalWrt OpenWrt-24.10](https://github.com/immortalwrt/immortalwrt/tree/openwrt-24.10)构建，Docker镜像构建完毕后，会自动推送到Releases，供本地使用。
 
+---
 
 ## 鸣谢
 
