@@ -78,4 +78,3 @@ jobs:
           prerelease: false
           files: |
             immortalwrt-docker-image.tar.gz
-            immortalwrt-rootfs.tar.gz
