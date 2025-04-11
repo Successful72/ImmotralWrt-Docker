@@ -80,7 +80,7 @@ jobs:
           make image PACKAGES="$CONFIG_PACKAGES" FILES="files"
           cp -rf bin/targets/$DEVICE_TARGET/$DEVICE_SUBTARGET/*rootfs.tar.gz $GITHUB_WORKSPACE/immortalwrt-rootfs.tar.gz
 
-      - name: Get Date
+      - name: Get Date and Time
         id: datetime
         run: echo "DATE_TIME=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
          
@@ -89,11 +89,6 @@ jobs:
           docker build -t immortalwrt:${{ env.DATE_TIME }} -f Dockerfile .
           docker save -o immortalwrt-docker-image-${{ env.DATE_TIME }}.tar immortalwrt:${{ env.DATE_TIME }}
           gzip immortalwrt-docker-image-${{ env.DATE_TIME }}.tar
-
-      
-
-      - name: Debug Date and Time
-        run: echo "DATE_TIME is $DATE_TIME"
       
       - name: Create Release
         id: create_release
