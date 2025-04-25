@@ -102,4 +102,4 @@ jobs:
           prerelease: false
           files: |
             immortalwrt-docker-image-${{ env.DATE_TIME }}.tar.gz
-            immortalwrt-rootfs.tar.gz
+            immortalwrt-rootfs--${{ env.DATE_TIME }}.tar.gz
