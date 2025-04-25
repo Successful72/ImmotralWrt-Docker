@@ -28,3 +28,31 @@ config dnsmasq
 	option filter_aaaa	0
 	option filter_a		0
 	#list addnmount		/some/path # read-only mount path to expose it to dnsmasq
+
+config dhcp 'lan'
+	option interface 'lan'
+	option start '1'
+	option limit '238'
+	option leasetime '5m'
+	option dhcpv4 'server'
+	option force '1'
+	list dhcp_option '3,200.56.72.248'
+	list dhcp_option '6,200.56.72.251'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+config host
+	option name 'YCSMYPC2'
+	list mac '00:E0:4C:01:C5:D5'
+	option ip '200.56.72.134'
+	option leasetime '5m'
+
+config host
+	list mac '94:83:C4:4C:5C:38'
+	option ip '200.56.72.241'
+	option leasetime 'infinite'
+	option name 'GL-AP'
