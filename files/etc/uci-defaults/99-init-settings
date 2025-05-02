@@ -10,7 +10,7 @@
 uci set luci.main.mediaurlbase='/luci-static/argon'
 
 # 设置DHCP服务器
-uci set dhcp.dnsmasq.local='ycslan'
-uci set dhcp.dnsmasq.ddomain='ycslan'
+uci set dhcp.@dnsmasq[0].local='/ycslan/'
+uci set dhcp.@dnsmasq[0].domain='ycslan'
 
 exit 0
