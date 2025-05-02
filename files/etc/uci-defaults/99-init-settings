@@ -9,4 +9,8 @@
 # Set default theme to luci-theme-argon
 uci set luci.main.mediaurlbase='/luci-static/argon'
 
+# 设置DHCP服务器
+uci set dhcp.dnsmasq.local='ycslan'
+uci set dhcp.dnsmasq.ddomain='ycslan'
+
 exit 0
