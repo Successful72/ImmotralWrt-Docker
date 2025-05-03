@@ -84,35 +84,10 @@ jobs:
           make image PACKAGES="$CONFIG_PACKAGES" FILES="files"
           cp -rf bin/targets/$DEVICE_TARGET/$DEVICE_SUBTARGET/*rootfs.tar.gz $GITHUB_WORKSPACE/immortalwrt-rootfs-${{ env.DATE_TIME }}.tar.gz
 
-      - name: Prepare Docker Build Files
-        run: |
-          # 确保脚本有执行权限
-          chmod +x $GITHUB_WORKSPACE/custom-scripts/Immortalwrt.sh
-          
-          # 创建Dockerfile的构建上下文
-          mkdir -p docker-build
-          cp $GITHUB_WORKSPACE/immortalwrt-rootfs-${{ env.DATE_TIME }}.tar.gz docker-build/
-          cp $GITHUB_WORKSPACE/custom-scripts/Immortalwrt.sh docker-build/
-          
-          # 复制修改后的Dockerfile到构建目录
-          cp $GITHUB_WORKSPACE/Dockerfile docker-build/
-          
-          # 确保在docker-build目录中有所有需要的文件
-          ls -la docker-build/
-          
       - name: Build Docker Image
         run: |
-          cd docker-build
-          # 显示构建上下文中的文件
-          echo "构建上下文中的文件:"
-          ls -la
-          
-          # 构建Docker镜像
-          docker build -t immortalwrt:${{ env.DATE_TIME }} .
-          
-          # 保存Docker镜像
-          docker save -o ../immortalwrt-docker-image-${{ env.DATE_TIME }}.tar immortalwrt:${{ env.DATE_TIME }}
-          cd ..
+          docker build -t immortalwrt:${{ env.DATE_TIME }} -f Dockerfile .
+          docker save -o immortalwrt-docker-image-${{ env.DATE_TIME }}.tar immortalwrt:${{ env.DATE_TIME }}
           gzip immortalwrt-docker-image-${{ env.DATE_TIME }}.tar
           
       - name: Create Release
