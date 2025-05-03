@@ -71,18 +71,6 @@ jobs:
           
           chmod +x files/etc/rc.local
 
-          # 在Build RootFS之前添加脚本
-          cp $GITHUB_WORKSPACE/custom-scripts/Immortalwrt.sh immortalwrt-imagebuilder-*/files/root/init-script.sh
-          cat > immortalwrt-imagebuilder-*/files/root/entrypoint.sh << 'EOF'
-          #!/bin/sh
-          # 运行初始化脚本
-          /root/init-script.sh
-
-          # 执行默认的启动命令
-          exec "$@"
-          EOF
-          chmod +x immortalwrt-imagebuilder-*/files/root/init-script.sh immortalwrt-imagebuilder-*/files/root/entrypoint.sh
-
       - name: Get Date and Time
         id: datetime
         run: echo "DATE_TIME=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
