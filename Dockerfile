@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.description="ImmortalWrt Docker image with config
 ADD *.tar.gz /
 
 # 复制初始化脚本
-COPY custom-scripts/Immortalwrt.sh /root/init-script.sh
+COPY Immortalwrt.sh /root/init-script.sh
 
 # 赋予脚本执行权限
 RUN chmod +x /root/init-script.sh
