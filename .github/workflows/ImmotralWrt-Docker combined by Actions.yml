@@ -87,8 +87,8 @@ jobs:
       - name: Prepare Docker Build Files
         run: |
           # 确保脚本有执行权限
-          chmod +x $GITHUB_WORKSPACE/openwrt-init.sh
-          chmod +x $GITHUB_WORKSPACE/entrypoint.sh
+          chmod +x $GITHUB_WORKSPACE/custom-scripts/Immortalwrt-init.sh
+          chmod +x $GITHUB_WORKSPACE/custom-scripts/entrypoint.sh
           
           # 创建Dockerfile的构建上下文
           mkdir -p docker-build
