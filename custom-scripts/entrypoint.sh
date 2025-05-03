@@ -20,7 +20,7 @@ START=99
 STOP=15
 
 start() {
-  /usr/bin/openwrt-init.sh &
+  /usr/bin/Immortalwrt-init.sh &
 }
 
 stop() {
