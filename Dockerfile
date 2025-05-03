@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source="https://github.com/Successful72/openwrt-d
 ADD *.tar.gz /
 
 # 添加配置脚本
-COPY custom-scripts/Immortalwrt-init.sh /usr/bin/Immortalwrt-init.sh
-COPY custom-scripts/entrypoint.sh /entrypoint.sh
+COPY $GITHUB_WORKSPACE/custom-scripts/Immortalwrt-init.sh /usr/bin/Immortalwrt-init.sh
+COPY $GITHUB_WORKSPACE/custom-scripts/entrypoint.sh /entrypoint.sh
 
 # 设置脚本执行权限
 RUN chmod +x /usr/bin/Immortalwrt-init.sh /entrypoint.sh
