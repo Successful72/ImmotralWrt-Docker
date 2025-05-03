@@ -87,28 +87,17 @@ jobs:
       - name: Prepare Docker Build Files
         run: |
           # 确保脚本有执行权限
-          chmod +x $GITHUB_WORKSPACE/custom-scripts/Immortalwrt-init.sh
-          chmod +x $GITHUB_WORKSPACE/custom-scripts/entrypoint.sh
+          chmod +x $GITHUB_WORKSPACE/custom-scripts/Immortalwrt.sh
           
           # 创建Dockerfile的构建上下文
           mkdir -p docker-build
           cp $GITHUB_WORKSPACE/immortalwrt-rootfs-${{ env.DATE_TIME }}.tar.gz docker-build/
-          cp $GITHUB_WORKSPACE/custom-scripts/Immortalwrt-init.sh docker-build/
-          cp $GITHUB_WORKSPACE/custom-scripts/entrypoint.sh docker-build/
+          cp $GITHUB_WORKSPACE/custom-scripts/Immortalwrt.sh docker-build/
           cp $GITHUB_WORKSPACE/Dockerfile docker-build/
-          
-          # 进入构建目录
-          cd docker-build
-          
-          # 设置默认环境变量值
-          # 这些值将在Dockerfile中作为默认值使用，用户可以在运行容器时覆盖它们
-          echo "设置Docker构建的默认环境变量..."
-          sed -i "s|ENV LAN_IPADDR=.*|ENV LAN_IPADDR=\"${{ github.event.inputs.IP_ADDRESS }}\" \\\\|" Dockerfile
-          sed -i "s|ENV LAN_GATEWAY=.*|ENV LAN_GATEWAY=\"${{ github.event.inputs.GATEWAY }}\" \\\\|" Dockerfile
-          sed -i "s|ENV LAN_DNS=.*|ENV LAN_DNS=\"${{ github.event.inputs.DNS_SERVER }}\" \\\\|" Dockerfile
           
       - name: Build Docker Image
         run: |
+          cd docker-build
           docker build -t immortalwrt:${{ env.DATE_TIME }} -f Dockerfile .
           docker save -o immortalwrt-docker-image-${{ env.DATE_TIME }}.tar immortalwrt:${{ env.DATE_TIME }}
           gzip immortalwrt-docker-image-${{ env.DATE_TIME }}.tar
