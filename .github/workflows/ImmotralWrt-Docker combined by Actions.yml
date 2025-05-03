@@ -97,7 +97,6 @@ jobs:
           
       - name: Build Docker Image
         run: |
-          cd docker-build
           docker build -t immortalwrt:${{ env.DATE_TIME }} -f Dockerfile .
           docker save -o immortalwrt-docker-image-${{ env.DATE_TIME }}.tar immortalwrt:${{ env.DATE_TIME }}
           gzip immortalwrt-docker-image-${{ env.DATE_TIME }}.tar
