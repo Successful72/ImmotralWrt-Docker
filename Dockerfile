@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.description="OpenWrt Docker image with configurab
 ADD *.tar.gz /
 
 # 添加配置脚本
-COPY /custom-scripts/Immortalwrt.sh /Immortalwrt.sh
+COPY custom-scripts/Immortalwrt.sh /Immortalwrt.sh
 
 # 设置脚本执行权限
 RUN chmod +x /Immortalwrt.sh
