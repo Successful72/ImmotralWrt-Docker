@@ -28,7 +28,7 @@ if [ -n "$last_empty_line" ]; then
         # 判断是否需要修改DHCP服务的ignore值
         if [ "$DHCP_IGNORE" = "1" ]; then
             echo "禁用LAN口DHCP服务..."
-            echo "uci set network.lan.dhcp='disabled'"
+            echo "uci set dhcp.lan.disabled='1'"
             echo "uci set network.lan.dhcp_ignore='1'"
         elif [ "$DHCP_IGNORE" = "0" ]; then
             # 如果DHCP_IGNORE为0，检查DHCP_FORCE并根据值进行处理
@@ -57,12 +57,12 @@ if [ -n "$last_empty_line" ]; then
         # 设置dnsmasq相关配置
         if [ -n "$DNSMASQ_LOCAL" ]; then
             echo "设置DNSMASQ_LOCAL..."
-            echo "uci set dhcp.lan.dnsmasq.local='$DNSMASQ_LOCAL'"
+            echo "uci set dhcp.@dnsmasq[0].local='$DNSMASQ_LOCAL'"
         fi
 
         if [ -n "$DNSMASQ_DOMAIN" ]; then
             echo "设置DNSMASQ_DOMAIN..."
-            echo "uci set dhcp.lan.dnsmasq.domain='$DNSMASQ_DOMAIN'"
+            echo "uci set dhcp.@dnsmasq[0].domain='$DNSMASQ_DOMAIN'"
         fi
 
         # 提交配置并重启网络
