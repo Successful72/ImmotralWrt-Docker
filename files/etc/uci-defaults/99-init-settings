@@ -14,10 +14,19 @@ uci set dhcp.@dnsmasq[0].local='/ycslan/'
 uci set dhcp.@dnsmasq[0].domain='ycslan'
 
 # 其他自定义设置
-# 禁用DHCP服务
-uci set dhcp.lan.ignore='1'
-# 下面的为示例命令，你可使用。如若修改，更改变量值中的端口号即可，务必不能出现端口冲突！80和443端口将交与Lucky监听，因此必须修改。
-uci set uhttpd.main.listen_http='0.0.0.0:72'
-uci set uhttpd.main.listen_https='0.0.0.0:445'
+# 启用DHCP
+uci set dhcp.lan.ignore='0'
+# 网络地址起始分配基址
+uci set dhcp.lan.start='1'
+# 客户端数量（注意：使用MACVLAN的容器会占用局域网IP，注意避开）
+uci set dhcp.lan.limit='226'
+# 租约时间（整数+时间单位。最短不能小于2m）
+uci set dhcp.lan.leasetime='5m'
+# 强制使用此服务器分配IP
+uci set dhcp.lan.force='1'
+# 子网掩码、网关和DNS
+uci add_list dhcp.lan.dhcp_option='1,255.255.255.0'
+uci add_list dhcp.lan.dhcp_option='3,200.56.72.248'
+uci add_list dhcp.lan.dhcp_option='6,200.56.72.251'
 
 exit 0
