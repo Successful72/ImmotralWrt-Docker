@@ -16,8 +16,16 @@ uci set dhcp.@dnsmasq[0].domain='ycslan'
 # 其他自定义设置
 # 禁用DHCP服务
 uci set dhcp.lan.ignore='1'
-# 下面的为示例命令，你可使用。如若修改，更改变量值中的端口号即可，务必不能出现端口冲突！80和443端口将交与Lucky监听，因此必须修改。
-uci set uhttpd.main.listen_http='0.0.0.0:72'
-uci set uhttpd.main.listen_https='0.0.0.0:445'
+# 禁用DHCP_IPv6服务
+uci set dhcp.lan.dhcpv6='disabled'
+uci set dhcp.lan.ra='disabled'
+uci set dhcp.lan.ndp='disabled'
 
+# 旁路由SNAT(这个必须加上)
+uci add firewall nat
+uci set firewall.@nat[-1].name='SideRouter'
+uci add_list firewall.@nat[-1].proto='all'
+uci set firewall.@nat[-1].src='lan'
+uci set firewall.@nat[-1].target='SNAT'
+uci set firewall.@nat[-1].snat_ip='200.56.72.248' # 这里填上旁路由IP
 exit 0
